@@ -165,45 +165,45 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --background: var(--background-light)
-  --on-background: var(--on-background-light)
-  --surface: var(--surface-light)
-  --surface-container-low: var(--surface-container-low-light)
-  --surface-container-highest: var(--surface-container-highest-light)
-  --on-surface: var(--on-surface-light)
-  --on-surface-variant: var(--on-surface-variant-light)
-  --primary: var(--primary-light)
-  --on-primary: var(--on-primary-light)
-  --primary-container: var(--primary-container-light)
-  --on-primary-container: var(--on-primary-container-light)
-  --secondary-container: var(--secondary-container-light)
-  --on-secondary-container: var(--on-secondary-container-light)
-  --outline: var(--outline-light)
-  --outline-variant: var(--outline-variant-light)
-  --inverse-surface: var(--inverse-surface-light)
-  --inverse-on-surface: var(--inverse-on-surface-light)
+  --background: var(--background-light);
+  --on-background: var(--on-background-light);
+  --surface: var(--surface-light);
+  --surface-container-low: var(--surface-container-low-light);
+  --surface-container-highest: var(--surface-container-highest-light);
+  --on-surface: var(--on-surface-light);
+  --on-surface-variant: var(--on-surface-variant-light);
+  --primary: var(--primary-light);
+  --on-primary: var(--on-primary-light);
+  --primary-container: var(--primary-container-light);
+  --on-primary-container: var(--on-primary-container-light);
+  --secondary-container: var(--secondary-container-light);
+  --on-secondary-container: var(--on-secondary-container-light);
+  --outline: var(--outline-light);
+  --outline-variant: var(--outline-variant-light);
+  --inverse-surface: var(--inverse-surface-light);
+  --inverse-on-surface: var(--inverse-on-surface-light);
 
 }
 [data-theme="dark"] {
 color-scheme: dark;
 
-  --background: var(--background-dark)
-  --on-background: var(--on-background-light)
-  --surface: var(--surface-dark)
-  --surface-container-low: var(--surface-container-low-dark)
-  --surface-container-highest: var(--surface-container-highest-dark)
-  --on-surface: var(--on-surface-dark)
-  --on-surface-variant: var(--on-surface-variant-dark)
-  --primary: var(--primary-dark)
-  --on-primary: var(--on-primary-dark)
-  --primary-container: var(--primary-container-dark)
-  --on-primary-container: var(--on-primary-container-dark)
-  --secondary-container: var(--secondary-container-dark)
-  --on-secondary-container: var(--on-secondary-container-dark)
-  --outline: var(--outline-dark)
-  --outline-variant: var(--outline-variant-dark)
-  --inverse-surface: var(--inverse-surface-dark)
-  --inverse-on-surface: var(--inverse-on-surface-dark)
+  --background: var(--background-dark);
+  --on-background: var(--on-background-light);
+  --surface: var(--surface-dark);
+  --surface-container-low: var(--surface-container-low-dark);
+  --surface-container-highest: var(--surface-container-highest-dark);
+  --on-surface: var(--on-surface-dark);
+  --on-surface-variant: var(--on-surface-variant-dark);
+  --primary: var(--primary-dark);
+  --on-primary: var(--on-primary-dark);
+  --primary-container: var(--primary-container-dark);
+  --on-primary-container: var(--on-primary-container-dark);
+  --secondary-container: var(--secondary-container-dark);
+  --on-secondary-container: var(--on-secondary-container-dark);
+  --outline: var(--outline-dark);
+  --outline-variant: var(--outline-variant-dark);
+  --inverse-surface: var(--inverse-surface-dark);
+  --inverse-on-surface: var(--inverse-on-surface-dark);
 
 }
 
@@ -380,6 +380,44 @@ body{
   #REUSED STYLE
 \*-----------------------------------*/
 
+.material-symbols-rounded{
+  width: 1em;
+  height: 1em;
+  display: block;
+  font-variation-settings: 
+  "FILL" 0,
+  "wght" 400,
+  "GRAD" 0,
+  "opsz" 24;
+  ;
+}
+
+
+
+:has(> .state-layer) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.state-layer{
+  position: absolute;
+  inset:0;
+  background-color: red;
+  opacity: 0;
+  transition: opacity var(--tr-duration-short) var(--tr-easing-linear);
+  z-index: -1;
+
+}
+
+:has(> .state-layer):hover > .state-layer { opacity: 0.12;}
+:has(> .state-layer):is(:focus,:focus-visible,:focus-within) > .state-layer { opacity: 0.19;}
+:has(> .state-layer):active > .state-layer { opacity: 0.25;}
+
+
+
 /*-----------------------------------*\
   #COMPONENTS
 \*-----------------------------------*/
@@ -394,6 +432,24 @@ body{
 /**
  * Icon button
  */
+
+ .icon-btn{
+  display: grid;
+  place-items: center;
+  color: var(--on-surface-variant);
+  border-radius: var(--radius-full);
+  --state-layer-bg: var(--on-surface-variant)
+ }
+.icon-btn.large{
+  width: 40px;
+  height: 40px;
+}
+.icon-btn.small{
+  width: 28px;
+  height: 28px;
+}
+
+.icon-btn.small .material-symbols-rounded{ font-size: 1.8rem;}
 
 /**
  * FAB (Floating Action Button)
@@ -418,6 +474,71 @@ body{
 /*-----------------------------------*\
   #SIDEBAR
 \*-----------------------------------*/
+
+.sidebar{
+  position: fixed;
+  top:0;
+  bottom:0;
+
+  right: 100%;
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2,max-content) 1fr max-content;
+  background-color: var(--surface-container-low);
+  max-width: var(--sidebar-width);
+  width: 100%;
+  padding:var(--spacing-3);
+  border-radius: 0 var(--radius-large) var(--radius-large) 0;
+  box-shadow: var(--shadow-2);
+  z-index: 4;
+  visibility: hidden;
+  transition: var(--tr-duration-long) var(--tr-easing-emphasized);
+  transition-property: transform,visibility;
+
+
+}
+.sidebar.active{
+  transform: translateX(100%);
+  visibility: visible;
+}
+.sidebar .fab{display: none;}
+
+.sidebar > .wrapper{
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar > .wrapper-1{
+  padding-inline: var(--spacing-4) var(--spacing-2);
+  margin-block-end: var(--spacing-3);
+}
+
+[data-theme='dark'] .logo-light, .logo-dark {display:none}
+
+[data-theme='dark'] .logo-dark {display: block;}
+
+.sidebar > .wrapper-2{ padding-inline: var(--spacing-4) var(--spacing-6)}
+
+.sidebar .nav{overflow-y: auto;}
+
+.nav-item {
+  color: var(--on-surface-variant);
+  --state-layer-bg: var(--on-surface-variant);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-05);
+  padding-inline: var(--spacing-4) var(--spacing-6);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.nav-item.active{
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+  --state-layer-bg: var(--on-secondary-container)
+}
 
 /*-----------------------------------*\
   #MAIN
