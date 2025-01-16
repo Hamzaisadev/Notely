@@ -171,7 +171,68 @@
       NOTE LIST
       -->
 
-      <div class="note-list" data-note-panel></div>
+      <div class="note-list" data-note-panel>
+        <div class="card">
+          <h3 class="card-title text-title-medium">Note title</h3>
+          <p class="card-text text-body-large">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+            animi accusantium cupiditate dolor, suscipit officia ullam cumque
+            excepturi veniam dolores, eos rerum quidem fuga quod possimus
+            architecto explicabo? Nihil vel ut impedit excepturi. Maiores at
+            dicta earum provident sunt, minus aliquam sit. Facere. Lorem ipsum
+            dolor sit amet consectetur, adipisicing elit. Culpa eum eligendi
+            omnis, ad quibusdam illum a laborum commodi incidunt, natus,
+            deleniti pariatur optio at repellendus minus in inventore est
+            distinctio!
+          </p>
+          <div class="wrapper">
+            <span class="card-time text-label-large">20 min ago</span>
+            <button class="icon-btn large" aria-label="Delete note">
+              <span class="material-symbols-rounded">delete</span>
+              <div class="state-layer"></div>
+            </button>
+          </div>
+          <div class="state-layer"></div>
+        </div>
+      </div>
+      <!-- 
+      FAB BUTTON FOR MOBILE
+      -->
+      <button class="fab" aria-label="new note" data-note-create-btn>
+        <span class="material-symbols-rounded" aria-hidden="true">add</span>
+
+        <div class="state-layer"></div>
+      </button>
+
+      <div class="modal">
+        <button class="icon-btn large" aria-label="Close modal">
+          <span class="material-symbols-rounded" aria-hidden="true">close</span>
+          <div class="state-layer"></div>
+        </button>
+        <input
+          type="text"
+          placeholder="Untitled"
+          value="Untitled"
+          class="modal-title text-title-medium"
+          data-note-field
+        />
+
+        <textarea
+          placeholder="Take a note..."
+          class="modal-text text-body-large custom-scrollbar"
+          data-note-field
+        >
+Take a note...</textarea
+        >
+
+        <div class="modal-footer">
+          <span class="time text-label-large">20 min ago</span>
+          <button class="btn fill" data-submit-btn>
+            <span class="text-label-large">Save</span>
+            <div class="state-layer"></div>
+          </button>
+        </div>
+      </div>
     </main>
   </body>
 </html>
