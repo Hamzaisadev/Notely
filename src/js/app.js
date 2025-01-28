@@ -4,7 +4,7 @@
 
 // --------------------===========<<  IMPORTS >>===========--------------------
 // Importing utility functions from utils.js
-import { addEventOnElems } from "./utils.js";
+import { addEventOnElems, getGreetingMsg } from "./utils.js";
 
 // --------------------===========<<  SIDEBAR TOGGLE >>===========--------------------
 // Selecting the sidebar toggle button using query selector
@@ -28,3 +28,15 @@ addEventOnElems($sidebarTogglers, "click", function () {
   // Toggle the 'active' class on the overlay to show/hide it
   $overlay.classList.toggle("active");
 });
+
+/** show greeting message on homepage */
+const /** {HTMLElement} */ $greetElement =
+    document.querySelector("[data-greeting]");
+
+// getting current hour using Date()
+
+const /**{number} */ currentHour = new Date().getHours();
+
+// Using the getGreetingMsg function from utils.js to get the greeting message
+
+$greetElement.textContent = getGreetingMsg(currentHour);
