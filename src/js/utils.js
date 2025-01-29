@@ -34,13 +34,23 @@ const getGreetingMsg = function (currentHour) {
   return `Good ${greeting}`;
 };
 
-// SHOW CURRENT DATE IN HOMEPAGE
+let /** {HTMLElement | Undefined} */ $lastActiveNavItem;
 
-const /**{HTMLElement} */ $currentDateElem = document.querySelector(
-    "[data-current-date]"
-  );
-$currentDateElem.textContent = new Date().toDateString().replace(" ", ", ");
+/**
+ * Activate a navigation item by adding a active class and deactivates the last active item
+ */
+
+const activeNotebook = function () {
+  $lastActiveNavItem?.classList.remove("active");
+  this.classList.add("active");
+  $lastActiveNavItem = this;
+};
+
+const makeElemEditable = function ($element) {
+  $element.contentEditable = "true";
+  $element.focus();
+};
 
 // Export this
 
-export { addEventOnElems, getGreetingMsg };
+export { addEventOnElems, getGreetingMsg, activeNotebook, makeElemEditable };
