@@ -67,4 +67,10 @@ export const db = {
       return notebookData;
     },
   },
+  get: {
+    notebook() {
+      readDb();
+      return notekeeperDB.notebooks;
+    },
+  },
 };

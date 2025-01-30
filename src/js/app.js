@@ -12,6 +12,7 @@ import {
 } from "./utils.js";
 import { Tooltip } from "./components/Tooltip.js";
 import { db } from "./db.js";
+import { client } from "./client.js";
 
 // --------------------===========<<  SIDEBAR TOGGLE >>===========--------------------
 
@@ -100,5 +101,13 @@ const createNotebook = function (event) {
     this.parentElement.remove();
 
     // Render navItem
+    client.notebook.create(notebookData);
   }
 };
+
+const renderExistedNotebook = function () {
+  const notebookList = db.get.notebook();
+  client.notebook.read(notebookList);
+};
+
+renderExistedNotebook();
