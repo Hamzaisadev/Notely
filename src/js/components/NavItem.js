@@ -1,5 +1,11 @@
 // moduel Imports;
+import { client } from "../client.js";
+import { db } from "../db.js";
+import { activeNotebook, makeElemEditable } from "../utils.js";
+import { DeleteConfirmModal } from "./Modal.js";
 import { Tooltip } from "./Tooltip.js";
+
+const $notePanelTitle = document.querySelector("[data-note-panel-title]");
 
 export const NavItem = function (id, name) {
   const $navItem = document.createElement("div");
@@ -39,5 +45,38 @@ export const NavItem = function (id, name) {
       $navItem.querySelectorAll("[data-tooltip]");
   $tooltipElems.forEach(($elem) => Tooltip($elem));
 
+  $navItem.addEventListener("click", function () {
+    $notePanelTitle.textContent = name;
+    activeNotebook.call(this);
+  });
+
+  const $navEditBtn = $navItem.querySelector("[data-edit-button]");
+  const $navItemField = $navItem.querySelector("[data-notebook-field]");
+  $navEditBtn.addEventListener(
+    "click",
+    makeElemEditable.bind(null, $navItemField)
+  );
+  $navItemField.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      this.removeAttribute("contenteditable");
+
+      const updateNotebookData = db.update.notebook(id, this.textContent);
+
+      client.notebook.update(id, updateNotebookData);
+    }
+  });
+
+  const $navItemDeleteBtn = $navItem.querySelector("[data-delete-button]");
+  $navItemDeleteBtn.addEventListener("click", function () {
+    const modal = DeleteConfirmModal(name);
+    modal.open();
+    modal.onSubmit(function (isConfirm) {
+      if (isConfirm) {
+        db.delete.notebook(id);
+        client.notebook.delete(id);
+      }
+      modal.close();
+    });
+  });
   return $navItem;
 };

@@ -7,6 +7,7 @@ import { activeNotebook } from "./utils.js";
 const $sidebarList = document.querySelector("[data-sidebar-list]");
 
 const $notePanelTitle = document.querySelector("[data-note-panel-title]");
+const $notePanelContent = document.querySelector("[data-note-panel]");
 
 export const client = {
   notebook: {
@@ -26,6 +27,34 @@ export const client = {
         }
         $sidebarList.appendChild($navItem);
       });
+    },
+    update(notebookId, notebookData) {
+      const $oldNotebook = document.querySelector(
+        `[data-notebook="${notebookId}"`
+      );
+      const $newNotebook = NavItem(notebookData.id, notebookData.name);
+      $notePanelTitle.textContent = notebookData.name;
+      $sidebarList.replaceChild($newNotebook, $oldNotebook);
+      activeNotebook.call($newNotebook);
+    },
+    delete(notebookId) {
+      const $deletedNotebook = document.querySelector(
+        `[data-notebook="${notebookId}"]`
+      );
+      const $activeNavItem =
+        $deletedNotebook.nextElementSibling ??
+        $deletedNotebook.previousElementSibling;
+
+      if ($activeNavItem) {
+        $activeNavItem.click();
+      } else {
+        $notePanelTitle.innerHTML = "";
+        $notePanelContent.innerHTML = "";
+      }
+
+      $deletedNotebook.remove();
+
+      
     },
   },
 };

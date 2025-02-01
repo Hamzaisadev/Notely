@@ -13,6 +13,7 @@ import {
 import { Tooltip } from "./components/Tooltip.js";
 import { db } from "./db.js";
 import { client } from "./client.js";
+import { NoteModal } from "./components/Modal.js";
 
 // --------------------===========<<  SIDEBAR TOGGLE >>===========--------------------
 
@@ -111,3 +112,9 @@ const renderExistedNotebook = function () {
 };
 
 renderExistedNotebook();
+
+const $noteCreateBtn = document.querySelectorAll("[data-note-create-btn]");
+addEventOnElems($noteCreateBtn, "click", function () {
+  const modal = NoteModal();
+  modal.open();
+});

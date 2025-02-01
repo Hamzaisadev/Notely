@@ -60,6 +60,14 @@ const generateId = function () {
   return new Date().getTime().toString();
 };
 
+const findNotebook = function (db, notebookId) {
+  return db.notebooks.find((notebook) => notebook.id === notebookId);
+};
+
+const findNotebookIndex = function (db, notebookId) {
+  return db.notebooks.findIndex((item) => item.id === notebookId);
+};
+
 // Export this
 
 export {
@@ -68,4 +76,6 @@ export {
   activeNotebook,
   makeElemEditable,
   generateId,
+  findNotebook,
+  findNotebookIndex,
 };
