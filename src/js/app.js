@@ -100,9 +100,16 @@ const createNotebook = function (event) {
   if (event.key === "Enter") {
     const notebookData = db.post.notebook(this.textContent || "Untitled");
     this.parentElement.remove();
+    activeNotebook.call(this);
 
     // Render navItem
     client.notebook.create(notebookData);
+    const $newNavItem = $sidebarList.querySelector(
+      `[data-notebook="${notebookData.id}"]`
+    );
+    if ($newNavItem) {
+      $newNavItem.click(); // Simulate a click to activate the notebook
+    }
   }
 };
 
@@ -117,4 +124,24 @@ const $noteCreateBtn = document.querySelectorAll("[data-note-create-btn]");
 addEventOnElems($noteCreateBtn, "click", function () {
   const modal = NoteModal();
   modal.open();
+
+  modal.onSubmit((noteObj) => {
+    const activeNotebookId = document.querySelector("[data-notebook].active")
+      .dataset.notebook;
+    const noteData = db.post.note(activeNotebookId, noteObj);
+    client.note.create(noteData);
+    modal.close();
+  });
 });
+
+const renderExistedNote = function () {
+  const activeNotebookId = document.querySelector("[data-notebook].active")
+    ?.dataset.notebook;
+  if (activeNotebookId) {
+    const noteList = db.get.note(activeNotebookId);
+
+    client.note.read(noteList);
+    console.log(noteList);
+  }
+};
+renderExistedNote();

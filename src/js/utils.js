@@ -68,6 +68,21 @@ const findNotebookIndex = function (db, notebookId) {
   return db.notebooks.findIndex((item) => item.id === notebookId);
 };
 
+const formateDate = function (milliseconds) {
+  const currentTime = new Date().getTime();
+  const minute = Math.floor((currentTime - milliseconds) / 1000 / 60);
+  const hour = Math.floor(minute / 60);
+  const day = Math.floor(hour / 24);
+
+  return minute < 1
+    ? "Just now"
+    : minute < 60
+    ? `${minute} minutes ago`
+    : hour < 24
+    ? `${hour} hours ago`
+    : `${day} day ago`;
+};
+
 // Export this
 
 export {
@@ -78,4 +93,5 @@ export {
   generateId,
   findNotebook,
   findNotebookIndex,
+  formateDate,
 };
