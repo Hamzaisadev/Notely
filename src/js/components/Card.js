@@ -1,6 +1,9 @@
 "use strict";
 
+import { client } from "../client.js";
+import { db } from "../db.js";
 import { formateDate } from "../utils.js";
+import { DeleteConfirmModal, NoteModal } from "./Modal.js";
 import { Tooltip } from "./Tooltip.js";
 
 export const Card = function (noteData) {
@@ -18,7 +21,7 @@ export const Card = function (noteData) {
             <span class="card-time text-label-large">${formateDate(
               postedOn
             )}</span>
-            <button data-tooltip='Delete Note' class="icon-btn large" aria-label="Delete note">
+            <button data-delete-btn data-tooltip='Delete Note' class="icon-btn large" aria-label="Delete note">
               <span class="material-symbols-rounded" aria-hidden='true' >delete</span>
               <div class="state-layer"></div>
             </button>
@@ -27,5 +30,30 @@ export const Card = function (noteData) {
 
   Tooltip($card.querySelector("[data-tooltip]"));
 
+  $card.addEventListener("click", function () {
+    const modal = NoteModal(title, text, formateDate(postedOn));
+    modal.open();
+
+    modal.onSubmit(function (noteData) {
+      const updatedData = db.update.note(id, noteData);
+
+      client.note.update(id, updatedData);
+      modal.close();
+    });
+  });
+
+  const $deleteBtn = $card.querySelector("[data-delete-btn]");
+  $deleteBtn.addEventListener("click", function (event) {
+    event.stopImmediatePropagation();
+    const modal = DeleteConfirmModal(title);
+    modal.open();
+    modal.onSubmit(function (isConfirm) {
+      if (isConfirm) {
+        const existedNotes = db.delete.note(notebookId, id);
+        client.note.delete(id, existedNotes.length);
+      }
+      modal.close();
+    });
+  });
   return $card;
 };

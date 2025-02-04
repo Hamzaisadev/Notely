@@ -85,7 +85,7 @@ export const client = {
       if (!$notePanelContent.querySelector("[data-note]"))
         $notePanelContent.innerHTML = "";
       const $card = Card(noteData);
-      $notePanelContent.appendChild($card);
+      $notePanelContent.prepend($card);
     },
     read(noteList) {
       if (noteList.length) {
@@ -98,6 +98,15 @@ export const client = {
       } else {
         $notePanelContent.innerHTML = empyNotesTemplate;
       }
+    },
+    update(noteId, noteData) {
+      const $oldCard = document.querySelector(`[data-note='${noteId}']`);
+      const $newCard = Card(noteData);
+      $notePanelContent.replaceChild($newCard, $oldCard);
+    },
+    delete(noteId, isNoteExists) {
+      document.querySelector(`[data-note="${noteId}"]`).remove();
+      if (!isNoteExists) $notePanelContent.innerHTML = emptyNotesTemplate;
     },
   },
 };

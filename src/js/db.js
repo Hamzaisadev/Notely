@@ -1,6 +1,12 @@
 "use strict";
 // imports
-import { findNotebook, findNotebookIndex, generateId } from "./utils.js";
+import {
+  findNote,
+  findNotebook,
+  findNotebookIndex,
+  findNoteIndex,
+  generateId,
+} from "./utils.js";
 
 // DB OBJECT
 
@@ -100,6 +106,13 @@ export const db = {
       writeDb();
       return notebook;
     },
+    note(noteId, object) {
+      readDb();
+      const oldNote = findNote(notekeeperDB, noteId);
+      const newNote = Object.assign(oldNote, object);
+      writeDb();
+      return newNote;
+    },
   },
   delete: {
     notebook(notebookId) {
@@ -109,6 +122,15 @@ export const db = {
 
       notekeeperDB.notebooks.splice(notebookIndex, 1);
       writeDb();
+    },
+    note(notebookId, noteId) {
+      readDb();
+
+      const notebook = findNotebook(notekeeperDB, notebookId);
+      const noteIndex = findNoteIndex(notebook, noteId);
+      notebook.notes.splice(noteIndex, 1);
+      writeDb();
+      return notebook.notes;
     },
   },
 };

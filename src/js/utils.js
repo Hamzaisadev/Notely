@@ -83,6 +83,19 @@ const formateDate = function (milliseconds) {
     : `${day} day ago`;
 };
 
+const findNote = (db, noteId) => {
+  let note;
+  for (const notebook of db.notebooks) {
+    note = notebook.notes.find((note) => note.id === noteId);
+    if (note) break;
+  }
+  return note;
+};
+
+const findNoteIndex = function (notebook, noteId) {
+  return notebook.notes.findIndex((note) => note.id === noteId);
+};
+
 // Export this
 
 export {
@@ -94,4 +107,6 @@ export {
   findNotebook,
   findNotebookIndex,
   formateDate,
+  findNote,
+  findNoteIndex,
 };
