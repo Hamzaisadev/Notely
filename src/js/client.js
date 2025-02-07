@@ -96,7 +96,7 @@ export const client = {
           $notePanelContent.appendChild($card);
         });
       } else {
-        $notePanelContent.innerHTML = empyNotesTemplate;
+        $notePanelContent.innerHTML = emptyNotesTemplate;
       }
     },
     update(noteId, noteData) {
